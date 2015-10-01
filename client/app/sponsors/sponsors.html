@@ -4,5 +4,7 @@ This is the sponsors view
 	Sponsor Link : {{sponsor.sponsor_link}}
 	Priority : {{sponsor.priority}}
 	row_layout : {{sponsor.row_layout}}
-	logo : <img src='{{img_uri(sponsor.logo)}}'>
+	<!-- logo : <img src='{{img_uri(sponsor.logo)}}'> -->
+	logo : <img ng-src="api/uploads/{{sponsor.logo}}/{{sponsor.imagename}}">
+	{{sponsor}}
 </div>

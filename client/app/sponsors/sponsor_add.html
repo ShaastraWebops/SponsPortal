@@ -43,7 +43,7 @@
                                             'has-error': form.file.$invalid && submitted }">
           <label>Logo</label>
 
-          <input type="file" name="file" ngf-select ngf-pattern = '.jp*g' accept='image/jp*g' class="form-control" ng-model="file"
+          <input type="file" id="file" name="file" ngf-select ngf-pattern = '.jp*g' accept='image/jp*g' class="form-control" ng-model="file"
                  required/>
           <span class="help-block" ng-show="form.file.$error.required && submitted">
             A logo is required
@@ -63,7 +63,7 @@
   </div>
   <hr>
 </div>
-<div class="col-sm-offset-2 col-sm-8">
+<!-- <div class="col-sm-offset-2 col-sm-8">
 	<form class ='form' name='form'>
 		Title : <input type='text' name='title' ng-model='title'/>
 		Sponsor Linke : <input type='text' name='sponsor_link' ng-model='sponsor_link'/>
@@ -72,4 +72,4 @@
 		Logo : <input type='file' name='file' ngf-select ng-model='file' ngf-pattern = '.jp*g' accept='image/jp*g'/>
 		<button type='submit' ng-click='submit();'>Upload</button>
 	</form>
-</div>
+</div> -->

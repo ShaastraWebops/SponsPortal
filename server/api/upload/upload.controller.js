@@ -12,40 +12,40 @@ var gfs = new Grid(mongoose.connection.db);
 exports.create = function (req, res) {
   var part = req.files.file;
     console.log(req.files);
-    // var writeStream = gfs.createWriteStream({
-    //   filename: part.name,
-    //   mode: 'w',
-    //   content_type:'image/jpeg'
-    // });
-    //
-    //
-    // writeStream.on('close', function(file) {
-    //   console.log(file._id);
-    //   return res.status(200).send({
-    //     fileId: file._id,
-    //     message: 'Success'
-    //   });
-    // });
-    //
-    // writeStream.write(part.data);
-    //
-    // writeStream.end();
-  // }
-  var partname=part.name+Math.random().toString(36).slice(2);
-  var filename=path.join('/Library/WebServer/Documents/pics','spons_images',partname);
-
-  console.log(filename);
-  fs.writeFile(filename,part.data,function(err,written,buffer){
-    if(err) return res.status(404).send({
-        error: err,
-        message: 'Fail'
-      });
-    return res.status(200).send({
-        fileId: filename,
+    var writeStream = gfs.createWriteStream({
+      filename: part.name,
+      mode: 'w',
+      content_type:'image/jpeg'
+    });
+    
+    
+    writeStream.on('close', function(file) {
+      console.log(file._id);
+      return res.status(200).send({
+        fileId: file._id,
         message: 'Success'
       });
-  });
-}
+    });
+    
+    writeStream.write(part.data);
+    
+    writeStream.end();
+  }
+  // var partname=part.name+Math.random().toString(36).slice(2);
+  // var filename=path.join('/Library/WebServer/Documents/pics','spons_images',partname);
+
+//   console.log(filename);
+//   fs.writeFile(filename,part.data,function(err,written,buffer){
+//     if(err) return res.status(404).send({
+//         error: err,
+//         message: 'Fail'
+//       });
+//     return res.status(200).send({
+//         fileId: filename,
+//         message: 'Success'
+//       });
+//   });
+// }
 
 exports.serve = function(req, res) {
   gfs.findOne({ _id: req.params.id}, function (err, file) {

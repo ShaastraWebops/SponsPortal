@@ -7,6 +7,7 @@ var SponsorSchema = new Schema({
   title: String,
   sponsor_link: String,
   logo: String,
+  imagename: String,
   priority: Number,
   row_layout: Number,
   active: Boolean
