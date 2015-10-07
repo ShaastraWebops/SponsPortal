@@ -1,0 +1,52 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+<div class="col-md-12">
+	<div layout="column">
+		<div class="jumbotron col-sm-offset-3 col-sm-6">
+			<div class="md-whiteframe-z1">
+		    <md-toolbar class="md-primary">
+		      <h2 class="md-toolbar-tools">
+		        Create a new Category
+		      </h2>
+		    </md-toolbar>
+
+		    <md-content layout-padding>
+		      <form name="categoryForm" ng-submit="newCategory(categoryForm)" novalidate>
+
+		        <md-input-container>
+		          <label>Title</label>
+		          <input name="title" ng-model="categoryTitle" ng-required="true" mongoose-error />
+		        </md-input-container>
+		        <div class="error">
+		          <span ng-show="form.title.$error.required && categorySubmitted">
+		            Category is required.
+		          </span>
+		          <span>{{ errors.other }}</span>
+		        </div>
+		        <md-button type="submit" class="md-raised md-primary">Create</md-button>
+		      </form>
+		    </md-content layout-padding> 
+		    </div>
+	    </div>
+	    <div class="jumbotron col-sm-offset-3 col-sm-6" flex flex-order="2">
+          <div class="md-whiteframe-z1">
+
+            <md-toolbar class="md-primary">
+              <h3 class="md-toolbar-tools">
+                All Categories
+              </h3>
+            </md-toolbar>
+
+            <md-content layout-padding>
+              <md-list>
+                <md-list-item ng-repeat="category in allCategorys track by $index | orderBy: 'createdOn':true">
+                  <h4>{{ category.categoryName }}</h4>
+          			<ng-md-icon icon="edit" class="md-secondary" ng-click="categoryEditModal(category)" aria-label="edit-category"></ng-md-icon>
+                  	<ng-md-icon icon="delete" class="md-primary" ng-click="removeCategory($index)" aria-label="delete-category"></ng-md-icon>
+                  <md-divider></md-divider>
+                </md-list-item>
+              </md-list>
+            </md-content>
+          </div>
+        </div>
+	</div>
+</div>

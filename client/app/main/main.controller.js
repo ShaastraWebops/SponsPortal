@@ -3,7 +3,7 @@
 angular.module('sponsPortalApp')
   .controller('MainCtrl', function ($scope, $state, $http, socket) {
 
-    $state.go('sponsors');
+    $state.go('login');
     $scope.awesomeThings = [];
 
     // $http.get('/api/posts/newsfeed/1').success(function (data) {
