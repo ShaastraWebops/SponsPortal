@@ -5,6 +5,7 @@ var mongoose = require('mongoose'),
 
 var SponsorSchema = new Schema({
   title: String,
+  category: { type: Schema.Types.Object, ref: 'Category' },
   sponsor_link: String,
   logo: String,
   imagename: String,

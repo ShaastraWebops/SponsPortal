@@ -66,11 +66,9 @@ exports.update = function(req, res) {
 
 // Deletes a category from the DB.
 exports.destroy = function(req, res) {
-  console.log("hello");
   Category.findById(req.params.id, function (err, category) {
     if(err) { return handleError(res, err); }
     if(!category) { return res.send(404); }
-    console.log(res);
     category.remove(function(err) {
       if(err) { return handleError(res, err); }
       return res.send(204);

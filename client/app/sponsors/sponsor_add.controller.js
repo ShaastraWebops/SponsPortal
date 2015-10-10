@@ -1,12 +1,19 @@
 'use strict';
 
 angular.module('sponsPortalApp')
-  .controller('SponsorAddCtrl',function ($upload,$scope,$http) {
+  .controller('SponsorAddCtrl',function ($upload, $scope, $http, CategoryService) {
     $scope.submitted = false;
     $scope.file=null;
     $scope.priority=10;
     $scope.row_layout=1;
     var uploadFileSponsor = '';
+
+    CategoryService.getAllCategorys()
+    .then(function(allCategorys){
+      $scope.allCategorys=allCategorys;
+    },function(err){
+      console.log(err);
+    });
 
     var dataURItoBlob = function (dataURI) {
       var binary = atob(dataURI.split(',')[1]);
@@ -90,6 +97,7 @@ angular.module('sponsPortalApp')
         .success(function (data, status, headers, config) {
           var body={
             title:$scope.title,
+            category: JSON.parse($scope.category),
             sponsor_link:$scope.sponsor_link,
             logo: data.fileId,
             imagename: uploadFileSponsor.name,

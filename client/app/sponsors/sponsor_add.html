@@ -17,6 +17,16 @@
             A title is required
           </span>
         </div>
+        <div class="form-group" ng-class="{ 'has-success': form.category.$valid && submitted,
+                                            'has-error': form.category.$invalid && submitted }">
+            <label>Category</label>
+        <select class="form-control" name="category" ng-model="category">
+          <option ng-repeat="category in allCategorys" value="{{ category }}">{{ category.categoryName }}</option>
+        </select>
+          <span class="help-block" ng-show="form.category.$error.required && submitted">
+            A category is required
+          </span>
+        </div>
 				<div class="form-group" ng-class="{ 'has-success': form.sponsor_link.$valid && submitted,
                                             'has-error': form.sponsor_link.$invalid && submitted }">
           <label>Sponsor Link</label>
