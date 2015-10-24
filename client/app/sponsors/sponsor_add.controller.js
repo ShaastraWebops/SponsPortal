@@ -105,6 +105,21 @@ angular.module('sponsPortalApp')
             row_layout:$scope.row_layout||1,
             active:$scope.active||true
           };
+        //   CategoryService.getCategory($scope.category._id)
+        //     .then(function (data) {
+        //     $scope.category = data;
+        //     },function (err){
+        //     console.log(err);
+        //   });
+        //   $scope.category.sponsors.push(data.fileId);
+        //   CategoryService.editCategory({
+        //   _id: $scope.category._id,
+        //   sponsors: $scope.category.sponsors
+        //   // .catch(function (err) {
+        //   //   console.log(err);
+        //   // })
+        // })
+          // console.log($scope.category);
           $http.post('/api/sponsors',body)
             .then(function(response){
               console.log(response);

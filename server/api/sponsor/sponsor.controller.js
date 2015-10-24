@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Sponsor = require('./sponsor.model');
+var Category = require('../category/category.model');
 
 // Get list of sponsors
 exports.index = function(req, res) {
@@ -22,10 +23,25 @@ exports.show = function(req, res) {
 
 // Creates a new sponsor in the DB.
 exports.create = function(req, res) {
-  Sponsor.create(req.body, function(err, sponsor) {
+  Category.findById(req.body.category, function (err, category) {
     if(err) { return handleError(res, err); }
-    return res.json(201, sponsor);
-  });
+    if(!category) { return res.status(404).json({message: "Category does not exist"}); }
+    Sponsor.create(req.body,function(err, sponsor) {
+      if(err) { return handleError(res, err); }
+      return res.json(201, sponsor);
+    });
+    var newSponsor = Sponsor(req.body);
+    if(category.sponsors.indexOf(newSponsor._id) == -1) {
+      category.sponsors.push(newSponsor._id);
+      category.save(function (err) {
+        if(err) { return handleError(res, err); }
+      });
+    }
+  })
+  // Sponsor.create(req.body, function(err, sponsor) {
+  //   if(err) { return handleError(res, err); }
+  //   return res.json(201, sponsor);
+  // });
 };
 
 // Updates an existing sponsor in the DB.

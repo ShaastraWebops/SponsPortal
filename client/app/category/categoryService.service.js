@@ -8,6 +8,11 @@ angular.module('sponsPortalApp')
   	  	  return response;	
   	  	});
   	  },
+      getCategory: function (categoryId) {
+        return $http.get('/api/categorys/' + categoryId).then(function (response) {
+          return response.data;
+        });
+      },
   	  getAllCategorys: function () {
   	    return $http.get('/api/categorys').then(function (response) {
           return response.data;
@@ -19,7 +24,6 @@ angular.module('sponsPortalApp')
         });
       },
       deleteCategory: function (id) {
-        console.log(id);
         return $http.delete('/api/categorys/' + id).then(function (response) {
           return response;
         });

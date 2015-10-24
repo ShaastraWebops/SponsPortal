@@ -7,4 +7,5 @@ This is the sponsors view
 	row_layout : {{sponsor.row_layout}}
 	<!-- logo : <img src='{{img_uri(sponsor.logo)}}'> -->
 	logo : <a ng-href="http://{{sponsor.sponsor_link}}" target="_blank"><img ng-src="api/uploads/{{sponsor.logo}}/{{sponsor.imagename}}"></a>
+	<button type="button" class="btn btn-primary active" ng-click="deleteSponsor($index)">Delete</button>
 </div>
