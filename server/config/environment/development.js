@@ -8,5 +8,5 @@ module.exports = {
     uri: 'mongodb://localhost/sponsportal-dev'
   },
 
-  seedDB: true
+  seedDB: false
 };

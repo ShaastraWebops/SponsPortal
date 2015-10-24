@@ -18,7 +18,7 @@ function handleError (res, err) {
 // Get list of categorys
 exports.index = function(req, res) {
   Category.find()
-  // .populate('sponsors')
+  .populate('sponsors')
   .populate('createdBy', '-salt -hashedPassword -lastSeen -provider')
   .populate('lastEditedBy', '-salt -hashedPassword -lastSeen -provider')
   .exec(function (err, categorys) {

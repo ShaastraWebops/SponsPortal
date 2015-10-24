@@ -1,8 +1,8 @@
-<!-- <div ng-repeat="category in allCategorys"> -->
-	<!-- <h4><b> {{category.categoryName}} </b></h4> -->
-<div ng-repeat="sponsor in all_sponsors">
-	Title : {{sponsor.title}}
-	Category : {{sponsor.category.categoryName}}
+<div ng-repeat="category in allCategorys">
+	<h4><b> {{category.categoryName}} </b></h4>
+<div ng-repeat="sponsor in category.sponsors">
+	<!-- Title : {{sponsor.title}} -->
+	<!-- Category : {{sponsor.category.categoryName}} -->
 	<!-- Sponsor Link : {{sponsor.sponsor_link}} -->
 	<!-- Priority : {{sponsor.priority}} -->
 	<!-- row_layout : {{sponsor.row_layout}} -->
@@ -11,4 +11,4 @@
 	<button type="button" class="btn btn-primary active" ng-click="sponsorEditModal(sponsor)">Edit</button>
 	<button type="button" class="btn btn-primary active" ng-click="deleteSponsor($index)">Delete</button>
 </div>
-<!-- </div> -->
+</div>
