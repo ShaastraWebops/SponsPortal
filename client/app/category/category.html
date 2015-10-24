@@ -14,11 +14,21 @@
 
 		        <md-input-container>
 		          <label>Title</label>
-		          <input name="title" ng-model="categoryTitle" ng-required="true" mongoose-error />
+		          <input name="title" type="text" ng-model="categoryTitle" ng-required="true" mongoose-error />
 		        </md-input-container>
 		        <div class="error">
 		          <span ng-show="form.title.$error.required && categorySubmitted">
-		            Category is required.
+		            Category Title is required.
+		          </span>
+		          <span>{{ errors.other }}</span>
+		        </div>
+		        <md-input-container>
+		          <label>priority</label>
+		          <input name="priority" type="number" ng-model="categoryPriority" ng-required="true" mongoose-error />
+		        </md-input-container>
+		        <div class="error">
+		          <span ng-show="form.priority.$error.required && categorySubmitted">
+		            Category Priority is required.
 		          </span>
 		          <span>{{ errors.other }}</span>
 		        </div>
@@ -39,7 +49,7 @@
             <md-content layout-padding>
               <md-list>
                 <md-list-item ng-repeat="category in allCategorys track by $index | orderBy: 'createdOn':true">
-                  <h4>{{ category.categoryName }}</h4>
+                  <h4>{{ category.categoryName }}({{ category.priorityOrder}})</h4>
           			<ng-md-icon icon="edit" class="md-secondary" ng-click="categoryEditModal(category)" aria-label="edit-category"></ng-md-icon>
                   	<ng-md-icon icon="delete" class="md-primary" ng-click="removeCategory($index)" aria-label="delete-category"></ng-md-icon>
                   <md-divider></md-divider>

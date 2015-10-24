@@ -25,6 +25,8 @@ angular.module('sponsPortalApp')
       return new Blob([new Uint8Array(array)], {type: mimeString});
     };
 
+    var uploadfileName = '';
+
     var handleFileSelect = function(evt) {
       console.log(evt.currentTarget.files);
       var myfile = evt.currentTarget.files[0];
@@ -35,11 +37,14 @@ angular.module('sponsPortalApp')
           console.log($scope.file);
         });
         uploadFileSponsor = myfile;
+        uploadfileName = myfile.name;
       };
       reader.readAsDataURL(myfile);
     };
 
-     angular.element(document.querySelector('#file')).on('change', handleFileSelect);
+     // angular.element(document.querySelector('#file')).on('change', handleFileSelect);
+     setTimeout(function () {angular.element(document.querySelector("#file")).on('change', handleFileSelect)}, 2000);
+
 
     
     $scope.submit = function(){
@@ -92,7 +97,7 @@ angular.module('sponsPortalApp')
     if($scope.file && $scope.form.file.$valid && !$scope.file.$error) {
         $upload.upload({
           url: 'api/uploads/',
-          file: dataURItoBlob($scope.file)
+          file: dataURItoBlob($scope.file) 
         })
         .success(function (data, status, headers, config) {
           var body={

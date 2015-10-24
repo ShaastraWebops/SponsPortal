@@ -2,7 +2,7 @@
   <form>
     <md-dialog-content>
       <div layout="column">
-        <div class="md-whiteframe-z1 leadsPortal">
+        <div class="md-whiteframe-z1 sponsPortal">
           <md-toolbar class="md-primary">
             <h1 class="md-toolbar-tools">
               Edit Category Details
@@ -14,6 +14,11 @@
               <label>Category Name</label>      
               <!-- <ng-md-icon icon="perm_identity" style="fill:#00a1f4" class="name"></ng-md-icon> -->
               <input ng-model="editCategory.categoryName" type="text">
+            </md-input-container>
+            <md-input-container>
+              <label>Priority</label>      
+              <!-- <ng-md-icon icon="perm_identity" style="fill:#00a1f4" class="name"></ng-md-icon> -->
+              <input ng-model="editCategory.categoryPriority" type="number">
             </md-input-container>
           </md-content>
         </div>

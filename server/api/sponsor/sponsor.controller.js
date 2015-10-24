@@ -53,6 +53,7 @@ exports.update = function(req, res) {
     var updated = _.merge(sponsor, req.body);
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
+      console.log(sponsor);
       return res.json(200, sponsor);
     });
   });

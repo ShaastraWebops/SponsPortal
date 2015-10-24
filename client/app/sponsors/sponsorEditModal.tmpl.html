@@ -1,0 +1,64 @@
+<md-dialog aria-label="Edit sponsor Details" style="width:80%;">
+  <form>
+    <md-dialog-content>
+      <div layout="column">
+        <div class="md-whiteframe-z1 sponsPortal">
+          <md-toolbar class="md-primary">
+            <h1 class="md-toolbar-tools">
+              Edit Sponsor Details
+            </h1>
+          </md-toolbar>
+
+          <md-content layout-padding>
+            <md-input-container>
+              <label>Title</label>      
+              <!-- <ng-md-icon icon="perm_identity" style="fill:#00a1f4" class="name"></ng-md-icon> -->
+              <input ng-model="editSponsor.title" type="text">
+            </md-input-container>
+          </md-content>
+
+          <div layout="row">
+             <div flex="20">
+              <md-select placeholder="Change Category" ng-model="editSponsor.category" ng-change="changeCategory()">
+              <md-select-label>{{ editSponsor.category.categoryName }}</md-select-label>
+                <md-option ng-repeat="category in allCategorys" value="{{ category }}">{{ category.categoryName }}</md-option>
+              </md-select>
+             </div>
+          </div>
+          
+          <md-content layout-padding>
+            <md-input-container>
+              <label>Sponsor Link</label>      
+              <!-- <ng-md-icon icon="perm_identity" style="fill:#00a1f4" class="name"></ng-md-icon> -->
+              <input ng-model="editSponsor.sponsor_link" type="text">
+            </md-input-container>
+          </md-content> 
+
+          <md-content layout-padding>
+            <md-input-container>
+              <label>Priority</label>      
+              <!-- <ng-md-icon icon="perm_identity" style="fill:#00a1f4" class="name"></ng-md-icon> -->
+              <input ng-model="editSponsor.priority" type="number">
+            </md-input-container>
+          </md-content>
+
+          <md-content layout-padding>
+            <md-input-container>
+              <label>Row Layout</label>      
+              <!-- <ng-md-icon icon="perm_identity" style="fill:#00a1f4" class="name"></ng-md-icon> -->
+              <input ng-model="editSponsor.row_layout" type="number">
+            </md-input-container>
+          </md-content>
+        </div>
+      </div>
+    </md-dialog-content>
+    <div class="md-actions" layout="row">
+      <md-button ng-click="cancel()" class="md-raised">
+        Discard changes
+      </md-button>
+      <md-button ng-click="save()" class="md-raised md-primary">
+        Save
+      </md-button>
+    </div>
+  </form>
+</md-dialog>

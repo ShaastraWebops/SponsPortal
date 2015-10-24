@@ -17,12 +17,14 @@ function handleError (res, err) {
 
 // Get list of categorys
 exports.index = function(req, res) {
-  Category.find(function (err, categorys) {
+  Category.find()
+  // .populate('sponsors')
+  .populate('createdBy', '-salt -hashedPassword -lastSeen -provider')
+  .populate('lastEditedBy', '-salt -hashedPassword -lastSeen -provider')
+  .exec(function (err, categorys) {
     if(err) { return handleError(res, err); }
     return res.json(200, categorys);
-  })
-  .populate('createdBy', '-salt -hashedPassword -lastSeen -provider')
-  .populate('lastEditedBy', '-salt -hashedPassword -lastSeen -provider');
+  });
 };
 
 // Get a single category

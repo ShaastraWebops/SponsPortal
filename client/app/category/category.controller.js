@@ -13,7 +13,8 @@ angular.module('sponsPortalApp')
       if(categoryForm.$valid) {
       	// console.log($scope.categoryTitle)
       	CategoryService.createCategory({
-      	  categoryName: $scope.categoryTitle,	
+      	  categoryName: $scope.categoryTitle,
+          priorityOrder: $scope.categoryPriority	
       	})
       	.then(function (response) {
         if(response.status === 201) {
@@ -31,6 +32,7 @@ angular.module('sponsPortalApp')
       });
       }	
       $scope.categoryTitle = '';
+      $scope.categoryPriority = null;
     }
 
     CategoryService.getAllCategorys()
@@ -71,12 +73,14 @@ angular.module('sponsPortalApp')
     $scope.cancel = function() {
         $mdDialog.cancel();
         $scope.editCategory.categoryTitle = $scope.categoryTitle;
+        $scope.editCategory.categoryPriority = $scope.categoryPriority;
     };
     $scope.save = function () {
       // do the saving part here
       CategoryService.editCategory({
           _id: $scope.editCategory._id,
-          categoryName: $scope.editCategory.categoryName 
+          categoryName: $scope.editCategory.categoryName,
+          priorityOrder: $scope.editCategory.categoryPriority  
       })
       // .then(function (response) {
       //   if(response.status === 200) {
