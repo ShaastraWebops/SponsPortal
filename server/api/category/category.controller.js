@@ -23,7 +23,7 @@ exports.index = function(req, res) {
   .populate('lastEditedBy', '-salt -hashedPassword -lastSeen -provider')
   .exec(function (err, categorys) {
     if(err) { return handleError(res, err); }
-    return res.json(200, categorys);
+    return res.status(200).json(categorys);
   });
 };
 

@@ -37,7 +37,7 @@ exports.create = function (req, res) {
 
 //   console.log(filename);
 //   fs.writeFile(filename,part.data,function(err,written,buffer){
-//     if(err) return res.status(404).send({
+//     if(err) return res.sendStatus(404).send({
 //         error: err,
 //         message: 'Fail'
 //       });

@@ -5,6 +5,7 @@ angular.module('sponsPortalApp')
     $http.get('/api/sponsors')
       .then(function (response) {
         $scope.all_sponsors = response.data;
+        console.log(response);
       });
     
     CategoryService.getAllCategorys()
@@ -15,12 +16,12 @@ angular.module('sponsPortalApp')
       console.log(err);
     });
       // do  the deleting part here  
-      $scope.deleteSponsor = function(index) {
-        $http.delete('/api/sponsors/' + $scope.all_sponsors[index]._id)
+      $scope.deleteSponsor = function(x, y) {
+        $http.delete('/api/sponsors/' + $scope.allCategorys[x].sponsors[y]._id)
           .then(function (response) {
           console.log(response);
         });
-        $scope.all_sponsors.splice(index, 1);
+        $scope.allCategorys[x].sponsors.splice(y, 1);
       };
       // modal for editing the sponsor
   $scope.sponsorEditModal = function (sponsor) {

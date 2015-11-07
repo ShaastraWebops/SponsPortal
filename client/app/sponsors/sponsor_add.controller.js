@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('sponsPortalApp')
-  .controller('SponsorAddCtrl',function ($upload, $scope, $http, CategoryService) {
+  .controller('SponsorAddCtrl',function ($upload, $scope, $http, CategoryService, $state) {
     $scope.submitted = false;
     $scope.file=null;
     $scope.priority=10;
@@ -128,6 +128,7 @@ angular.module('sponsPortalApp')
           $http.post('/api/sponsors',body)
             .then(function(response){
               console.log(response);
+            $state.go('sponsors');
               //redirect to view spons
             })
           // console.log(response);

@@ -8,7 +8,7 @@ var Category = require('../category/category.model');
 exports.index = function(req, res) {
   Sponsor.find(function (err, sponsors) {
     if(err) { return handleError(res, err); }
-    return res.json(200, sponsors);
+    return res.status(200).json(sponsors);
   });
 };
 
@@ -21,27 +21,21 @@ exports.show = function(req, res) {
   });
 };
 
-// Creates a new sponsor in the DB.
 exports.create = function(req, res) {
-  Category.findById(req.body.category, function (err, category) {
+  Sponsor.create(req.body, function(err, sponsor) {
     if(err) { return handleError(res, err); }
-    if(!category) { return res.status(404).json({message: "Category does not exist"}); }
-    Sponsor.create(req.body,function(err, sponsor) {
+    Category.findById(req.body.category, function (err, category) {
       if(err) { return handleError(res, err); }
-      return res.json(201, sponsor);
+      if(!category) { return res.send(404); }
+      if(category.sponsors.indexOf(sponsor._id) == -1) {
+        category.sponsors.push(sponsor._id);
+        category.save(function (err) {
+          if(err) { return handleError(res, err); }
+          return res.json(201, sponsor);
+        });
+      }
     });
-    var newSponsor = Sponsor(req.body);
-    if(category.sponsors.indexOf(newSponsor._id) == -1) {
-      category.sponsors.push(newSponsor._id);
-      category.save(function (err) {
-        if(err) { return handleError(res, err); }
-      });
-    }
-  })
-  // Sponsor.create(req.body, function(err, sponsor) {
-  //   if(err) { return handleError(res, err); }
-  //   return res.json(201, sponsor);
-  // });
+  });
 };
 
 // Updates an existing sponsor in the DB.
@@ -53,7 +47,7 @@ exports.update = function(req, res) {
     var updated = _.merge(sponsor, req.body);
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
-      console.log(sponsor);
+      // console.log(sponsor);
       return res.json(200, sponsor);
     });
   });
@@ -66,7 +60,7 @@ exports.destroy = function(req, res) {
     if(!sponsor) { return res.send(404); }
     sponsor.remove(function(err) {
       if(err) { return handleError(res, err); }
-      return res.send(204);
+      return res.sendStatus(204);
     });
   });
 };

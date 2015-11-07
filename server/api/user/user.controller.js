@@ -38,7 +38,7 @@ function handleError(res, err) {
  */
 exports.index = function (req, res) {
   User.find({}, '-salt -hashedPassword -deviceId -createdOn', function (err, users) {
-    if(err) return res.json(500, err);
+    if(err) return res.status(500).json(err);
     res.status(200).json(users);
   })
   .populate('department subDepartment groups', 'name');
@@ -48,7 +48,7 @@ exports.refresh = function (req, res) {
   User.find({updatedOn:{
         $gt: req.body.date
       }}, '-salt -hashedPassword -deviceId -createdOn', function (err, users) {
-    if(err) return res.json(500, err);
+    if(err) return res.status(500).json(err);
     res.status(200).json(users);
   })
   .populate('department subDepartment groups', 'name');
@@ -57,21 +57,16 @@ exports.refresh = function (req, res) {
 /**
  * Creates a new user
  */
-exports.create = function (req, res, next) {
+exports.create = function (req, res, next) {  
   var newUser = new User(req.body);
   newUser.role = 'user';
   newUser.provider = 'local';
   newUser.createdOn = Date.now();
   newUser.updatedOn = Date.now();
-  var newWall = new Wall({ name: req.body.name, parentId: newUser._id});
-  newWall.save(function (err, wall) {
-    if (err) { console.log(err); return validationError(res, err); }
-    newUser.wall = wall._id;
-    newUser.save(function (err, user) {
-      if (err) { console.log(err); return validationError(res, err); }
-      var token = jwt.sign({_id: user._id }, config.secrets.session, { expiresInMinutes: 60*5 });
-      res.json({ token: token });
-    });
+  newUser.save(function (err, user) {
+    if (err) { return validationError(res, err); }
+    var token = jwt.sign({_id: user._id }, config.secrets.session, { expiresInMinutes: 60*5 });
+    res.json({ token: token });
   });
 };
 
@@ -83,7 +78,7 @@ exports.show = function (req, res, next) {
 
   User.findById(userId, '-salt -hashedPassword -deviceId -createdOn -updatedOn', function (err, user) {
     if (err) return next(err);
-    if (!user) return res.status(404).json({message: "User does not exist"});
+    if (!user) return res.sendStatus(404).json({message: "User does not exist"});
     res.json(user);
   })
   .populate('department subDepartment groups', 'name');
@@ -92,7 +87,7 @@ exports.show = function (req, res, next) {
 exports.profilePic = function (req, res) {
   User.findById(req.params.id, function (err, user) {
     if(err) return validationError(res, err);
-    if(!user) return res.status(404).json({message: "User does not exist"});
+    if(!user) return res.sendStatus(404).json({message: "User does not exist"});
     gfs.findOne({ _id: user.profilePic}, function (err, file) {
         if(!file){
           return res.status(400).send({
@@ -166,7 +161,7 @@ exports.updateProfile = function (req, res, next) {
   // I'm no where using req.params.id here. Do a better algo
   User.findById(userId, function (err, user) {
     if(err) return validationError(res, err);
-    if(!user) return res.status(404).json({message: "User does not exist"});
+    if(!user) return res.sendStatus(404).json({message: "User does not exist"});
     req.body.role = undefined;
     req.body.hashedPassword = undefined;
     req.body.salt = undefined;
@@ -195,7 +190,7 @@ exports.me = function (req, res, next) {
     _id: userId
   }, '-salt -hashedPassword', function (err, user) { // don't ever give out the password or salt
     if (err) return next(err);
-    if(!user) return res.status(404).json({message: "User does not exist"});
+    if(!user) return res.sendStatus(404).json({message: "User does not exist"});
     res.status(200).json(user);
   })
   .populate('department subDepartment groups', 'name');
@@ -217,7 +212,7 @@ exports.addDepartment = function (req, res, next) {
         return handleError(res, err);
       }
       if(!department) {
-        return res.status(404).json({message: "Department does not exist"});
+        return res.sendStatus(404).json({message: "Department does not exist"});
       }
       if (department[req.body.role].indexOf(user._id) == -1){
         department[req.body.role].push(user._id);
@@ -254,7 +249,7 @@ exports.addGroup = function(req, res, next) {
         return handleError(res, err);
       }
       if(!group) {
-        return res.status(404).json({message: "Group does not exist"});;
+        return res.sendStatus(404).json({message: "Group does not exist"});;
       }
       if (group[req.body.role].indexOf(user._id) == -1){
         group[req.body.role].push(user._id);
@@ -282,7 +277,7 @@ exports.addSubDepartment = function(req, res, next) {
         return handleError(res, err);
       }
       if(!subDepartment) {
-        return res.status(404).json({message: "Sub Department does not exist"});;
+        return res.sendStatus(404).json({message: "Sub Department does not exist"});;
       }
       if (subDepartment[req.body.role].indexOf(user._id) == -1){
         subDepartment[req.body.role].push(user._id);
@@ -307,7 +302,7 @@ exports.gcmRegister = function(req, res) {
   User.findById(req.user._id, function (err, user) {
     console.log(req.body.deviceId);
     if (err) { return handleError(res, err); }
-    if (!user) { res.status(404).json({message: "User does not exist"}); }
+    if (!user) { res.sendStatus(404).json({message: "User does not exist"}); }
     if(!req.body.deviceId) {res.status(401).json({message: "No deviceId in request"}); }
     else{
       if(req.body.oldId) {
@@ -344,7 +339,7 @@ exports.forgotPassword = function(req, res, next) {
     function (token, done) {
       User.findOne({ email: req.body.email }, function (err, user) {
         if(err) { return handleError(res, err); }
-        if(!user) { return res.status(404).json({message: "User does not exist"}); }
+        if(!user) { return res.sendStatus(404).json({message: "User does not exist"}); }
         
         user.resetPasswordToken = token;
         user.resetPasswordExpires = Date.now() + 3600000; // one hour
@@ -397,7 +392,7 @@ exports.forgotPassword = function(req, res, next) {
 exports.resetPassword = function(req, res) {
   User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
     if(err) { return handleError(res, err); }
-    if(!user) { return res.status(404).json({message: "User does not exist"}); }
+    if(!user) { return res.sendStatus(404).json({message: "User does not exist"}); }
     user.password = req.body.newPassword;
     user.token = '';
     user.updatedOn = Date.now();

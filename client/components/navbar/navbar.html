@@ -18,9 +18,9 @@
       <md-button ng-show="isLoggedIn()" class="md-icon-button launch" ui-sref='profile({ userId: getCurrentUser()._id })'>
         <img ng-src="{{profilePic}}" class="md-avatar" />
       </md-button>
-      <md-button ng-show="isLoggedIn()" class="md-icon-button launch" ui-sref='settings'>
+      <!-- <md-button ng-show="isLoggedIn()" class="md-icon-button launch" ui-sref='settings'>
         <ng-md-icon icon="settings" style="fill: white" size="36"></ng-md-icon>
-      </md-button>
+      </md-button> -->
       <md-button ng-show="isLoggedIn()" ng-click="logout()">
         Logout
       </md-button>

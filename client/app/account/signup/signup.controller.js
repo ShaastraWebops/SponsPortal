@@ -4,7 +4,7 @@ angular.module('sponsPortalApp')
   .controller('SignupCtrl', function ($scope, Auth, $state, $location, $window) {
     $scope.getCurrentUser = Auth.getCurrentUser;
     if (Auth.isLoggedIn())
-      $state.go('coordPortalDashboard');
+      // $state.go('coordPortalDashboard');
 
     $scope.user = {};
     $scope.errors = {};

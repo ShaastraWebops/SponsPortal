@@ -13,22 +13,22 @@ angular.module('sponsPortalApp')
         templateUrl: 'app/account/signup/signup.html',
         controller: 'SignupCtrl'
       })
-      .state('settings', {
-        url: '/settings',
-        templateUrl: 'app/account/settings/settings.html',
-        controller: 'SettingsCtrl',
-        authenticate: true
-      })
-      .state('forgotPassword', {
-        url: '/forgotPassword',
-        templateUrl: 'app/account/password/forgotPassword.html',
-        controller: 'ForgotPasswordCtrl'
-      })
-      .state('resetPassword', {
-        url: '/resetPassword/:token',
-        templateUrl: 'app/account/password/resetPassword.html',
-        controller: 'ResetPasswordCtrl'
-      })
+      // .state('settings', {
+      //   url: '/settings',
+      //   templateUrl: 'app/account/settings/settings.html',
+      //   controller: 'SettingsCtrl',
+      //   authenticate: true
+      // })
+      // .state('forgotPassword', {
+      //   url: '/forgotPassword',
+      //   templateUrl: 'app/account/password/forgotPassword.html',
+      //   controller: 'ForgotPasswordCtrl'
+      // })
+      // .state('resetPassword', {
+      //   url: '/resetPassword/:token',
+      //   templateUrl: 'app/account/password/resetPassword.html',
+      //   controller: 'ResetPasswordCtrl'
+      // })
       .state('editProfile', {
         url: '/editProfile',
         templateUrl: 'app/account/editProfile/editProfile.html',
